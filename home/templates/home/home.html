@@ -1,0 +1,91 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع تعليم أونلاين</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+    document.querySelectorAll('.grade-card__title').forEach(card => {
+        card.addEventListener('click', () => {
+            const content = card.nextElementSibling;
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الرئيسية</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">المدرسون</h1>
+        <div class="row">
+            {% for teacher in teachers %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="{{ teacher.image.url }}" class="card-img-top" alt="{{ teacher.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ teacher.name }}</h5>
+                            <p class="card-text">تقييم: {{ teacher.rating }} | إعجابات: {{ teacher.likes }}</p>
+                            <div class="price">
+                                <span class="current-price">{{ teacher.price }} ج.م.</span>
+                                <span class="old-price">{{ teacher.old_price }} ج.م.</span>
+                            </div>
+                            <a href="{% url 'teacher_list' %}" class="btn btn-primary">عرض المزيد</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+
+
+<!-- زر لفتح النافذة المنبثقة -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    افتح النافذة المنبثقة
+</button>
+
+<!-- نافذة منبثقة -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">عنوان النافذة المنبثقة</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                محتوى النافذة المنبثقة.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                <button type="button" class="btn btn-primary">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.grade-card__title').click(function() {
+            $(this).next('.grade-card__content').slideToggle(); // استخدم أسلوب slideToggle لإظهار/إخفاء المحتوى
+        });
+    });
+</script>
